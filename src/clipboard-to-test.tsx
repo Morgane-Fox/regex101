@@ -10,8 +10,7 @@ export default async function callRegex101Api() {
   const selected = await getSelectedText()
   const lastCopied = await Clipboard.readText();
 
-  const input = selected.length > 1 ? selected : lastCopied
-
+  const input = selected && selected.length > 1 ? selected : lastCopied
 
   const body = {
     regex: "[^<>]+",
