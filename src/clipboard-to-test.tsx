@@ -2,12 +2,20 @@ import { Clipboard, getSelectedText } from "@raycast/api";
 import { runAppleScript } from "run-applescript";
 import axios from "axios";
 
+async function getSelected() {
+  try {
+    const selected = await getSelectedText() 
+    return selected
+  } catch (error) {
+    return ""
+  }
+}
 
 //my name is Morgane
 
 export default async function callRegex101Api() {
 
-  const selected = await getSelectedText()
+  const selected = await getSelected()
   const lastCopied = await Clipboard.readText();
 
   const input = selected && selected.length > 1 ? selected : lastCopied
