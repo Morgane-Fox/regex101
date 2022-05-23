@@ -1,23 +1,27 @@
-import { Clipboard } from "@raycast/api";
+import { Clipboard, getSelectedText } from "@raycast/api";
 import { runAppleScript } from "run-applescript";
 import axios from "axios";
 
 
-async function getCopiedHTML() {
-  const lastCopied = await Clipboard.readText();
-  return lastCopied
-}
-
+//my name is Morgane
 
 export default async function callRegex101Api() {
+
+  const selected = await getSelectedText()
+  const lastCopied = await Clipboard.readText();
+
+  const input = selected.length > 1 ? selected : lastCopied
+
+
   const body = {
     regex: "[^<>]+",
     flags: "ims",
-    testString: await getCopiedHTML(),
+    testString: input,
     delimiter: '/',
     flavor: 'javascript',
   };
 
+  
   try {
     const response = await axios.post('https://regex101.com/api/regex', body)
 
